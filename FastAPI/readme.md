@@ -17,12 +17,19 @@ Our database is represented by a csv file available at this [adress](https://git
 It contains the following fields:
 
 question: the title of the question
+
 subject : the category of the question
+
 correct : the list of correct answers
+
 use: the type of MCQ for which this question is used
+
 answerA : answer A
+
 answerB : answer B
+
 answerC : answer C
+
 answerD : the answer D (if it exists)
 
 ## The API
