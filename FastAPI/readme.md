@@ -11,3 +11,4 @@ The purpose of this API is to query a database to return a series of questions.
 The objective is to create this API.
 
 ## The data
+Our database is represented by a csv file available at this [adress](https://github.com/rudydesplan/datascientest_devops/blob/main/FastAPI/questions.csv)
