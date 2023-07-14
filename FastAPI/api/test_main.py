@@ -38,22 +38,27 @@ def test_get_questions_wrong_credentials():
 # Test for valid parameters 
 
 def test_get_questions_zero():
-    response = client.get(
-        "/questions?subject=BDD&use=Test de positionnement&number=0",
-        auth=("alice", "wonderland")
-    )
-    print(response.json())
-    assert response.status_code == 200
-    assert response.json() == []
+    try:
+        response = client.get(
+            "/questions?subject=BDD&use=Test de positionnement&number=0",
+            auth=("alice", "wonderland")
+        )
+        assert False, "Expected ValueError to be raised"
+    except ValueError as error:
+        assert str(error) == "Number of questions should be a positive integer."
 
 # Test for invalid parameters 
 
 def test_get_questions_negative_number():
-    response = client.get(
-        "/questions?subject=BDD&use=Test de positionnement&number=-5",
-        auth=("alice", "wonderland")
-    )
-    assert response.status_code == 400
+    try:
+        response = client.get(
+            "/questions?subject=BDD&use=Test de positionnement&number=-5",
+            auth=("alice", "wonderland")
+        )
+        assert False, "Expected ValueError to be raised"
+    except ValueError as error:
+        assert str(error) == "Number of questions should be a positive integer."
+
 
 # Test for getting random questions with valid subject and test type
 
@@ -69,18 +74,24 @@ def test_get_questions_valid():
 # Test for getting random questions with invalid subject or test type
 
 def test_get_questions_invalid_subject():
-    response = client.get(
-        "/questions?subject=Invalid&use=Test de positionnement&number=5",
-        auth=("alice", "wonderland")
-    )
-    assert response.status_code == 400
+    try:
+        response = client.get(
+            "/questions?subject=Invalid&use=Test de positionnement&number=5",
+            auth=("alice", "wonderland")
+        )
+        assert False, "Expected ValueError to be raised"
+    except ValueError as error:
+        assert str(error) == "Invalid subject: Invalid"
 
 def test_get_questions_invalid_use_case():
-    response = client.get(
-        "/questions?subject=BDD&use=Invalid&number=5",
-        auth=("alice", "wonderland")
-    )
-    assert response.status_code == 400
+    try:
+        response = client.get(
+            "/questions?subject=BDD&use=Invalid&number=5",
+            auth=("alice", "wonderland")
+        )
+        assert False, "Expected ValueError to be raised"
+    except ValueError as error:
+        assert str(error) == "Invalid use case: Invalid"
 
 # Test for admin operations (creating a new question)
 
