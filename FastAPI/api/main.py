@@ -33,3 +33,4 @@ def create_question(question: QuestionBase, credentials: HTTPBasicCredentials = 
         raise HTTPException(status_code=401, detail="Invalid credentials")
     return admin.create_question(question)
 
+# You will also need to define the Question and QuestionBase models in the models.py file.
