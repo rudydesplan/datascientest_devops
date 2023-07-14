@@ -1,33 +1,33 @@
-from typing import Optional, List
+from typing import Optional, Union, List
 from pydantic import BaseModel
 
 class Question(BaseModel):
     question: str
     subject: str
-    correct: List[str]
+    correct: Union[str, List[str]]
     use: str
-    answerA: str
-    answerB: str
-    answerC: str
-    answerD: Optional[str] = None
-    remark: Optional[str] = None
+    responseA: str
+    responseB: str
+    responseC: Optional[str] = ""
+    responseD: Optional[str] = ""
+    remark: Optional[str] = ""
 
 class QuestionCreate(BaseModel):
     question: str
     subject: str
-    correct: List[str]
+    correct: str
     use: str
-    answerA: str
-    answerB: str
-    answerC: str
-    answerD: Optional[str] = None
-    remark: Optional[str] = None
+    responseA: str
+    responseB: str
+    responseC: Optional[str] = ""
+    responseD: Optional[str] = ""
+    remark: Optional[str] = ""
 
 class TestType(BaseModel):
     use: str
 
 class TestSubjects(BaseModel):
-    subjects: List[str]
+    subjects: str
 
 class NumberOfQuestions(BaseModel):
     number: int

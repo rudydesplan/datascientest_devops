@@ -165,4 +165,5 @@ def test_create_question_empty_strings():
         },
         auth=("admin", "4dm1N")
     )
-    assert response.status_code == 422
+    assert response.status_code == 200
+    assert response.json() == {"message": "Question added successfully"}
