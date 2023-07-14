@@ -1,7 +1,13 @@
+import coverage
+import logging
 from fastapi.testclient import TestClient
 from main import app
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
 client = TestClient(app)
+
 
 # Test for health check endpoint
 
@@ -9,6 +15,10 @@ def test_health_check():
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "API is healthy"}
+    if response.status_code == 200:
+        logging.info("test_health_check PASSED")
+    else:
+        logging.error("test_health_check FAILED")
 
 # Test for basic authentication
 
@@ -27,6 +37,10 @@ def test_get_questions_authorized():
         headers={"Authorization": "Basic YWxpY2U6d29uZGVybGFuZA=="}
     )
     assert response.status_code == 200
+    if response.status_code == 200:
+        logging.info("test_get_questions_unauthorized PASSED")
+    else:
+        logging.error("test_get_questions_unauthorized FAILED")
 
 def test_get_questions_wrong_credentials():
     response = client.get(
@@ -70,6 +84,11 @@ def test_get_questions_valid():
     assert response.status_code == 200
     assert isinstance(response.json(), list)
     assert len(response.json()) == 5
+    
+    if response.status_code == 200:
+        logging.info("test_get_questions_valid PASSED")
+    else:
+        logging.error("test_get_questions_valid FAILED")
 
 # Test for getting random questions with invalid subject or test type
 
@@ -131,6 +150,11 @@ def test_create_question_authorized():
     )
     assert response.status_code == 200
     assert response.json() == {"message": "Question added successfully"}
+    
+    if response.status_code == 200:
+        logging.info("test_get_questions_valid PASSED")
+    else:
+        logging.error("test_get_questions_valid FAILED")
 
 def test_create_question_missing_parameters():
     response = client.post(
@@ -167,3 +191,66 @@ def test_create_question_empty_strings():
     )
     assert response.status_code == 200
     assert response.json() == {"message": "Question added successfully"}
+    
+    if response.status_code == 200:
+        logging.info("test_create_question_empty_strings PASSED")
+    else:
+        logging.error("test_create_question_empty_strings FAILED")
+        
+    
+if __name__ == "__main__":
+    # Enable logging for the test execution
+    logging.getLogger().setLevel(logging.INFO)
+    logging.info("Starting test execution...")
+    
+    # Start coverage before your tests
+    cov = coverage.Coverage()
+    cov.start()
+    
+    logging.info("Running test_health_check")
+    test_health_check()
+    
+    logging.info("Running test_get_questions_unauthorized")
+    test_get_questions_unauthorized()
+    
+    logging.info("Running test_get_questions_authorized")
+    test_get_questions_authorized()
+    
+    logging.info("Running test_get_questions_wrong_credentials")
+    test_get_questions_wrong_credentials()
+    
+    logging.info("Running test_get_questions_zero")
+    test_get_questions_zero()
+    
+    logging.info("Running test_get_questions_negative_number")
+    test_get_questions_negative_number()
+    
+    logging.info("Running test_get_questions_valid")
+    test_get_questions_valid()
+    
+    logging.info("Running test_get_questions_invalid_subject")
+    test_get_questions_invalid_subject()
+    
+    logging.info("Running test_get_questions_invalid_use_case")
+    test_get_questions_invalid_use_case()
+    
+    logging.info("Running test_create_question_unauthorized")
+    test_create_question_unauthorized()
+    
+    logging.info("Running test_create_question_authorized")
+    test_create_question_authorized()
+    
+    logging.info("Running test_create_question_missing_parameters")
+    test_create_question_missing_parameters()
+    
+    logging.info("Running test_create_question_empty_strings")
+    test_create_question_empty_strings()
+    
+    logging.info("Test execution completed.")
+    
+    # At the end of your tests, stop and save coverage data
+    cov.stop()
+    cov.save()
+
+    # Generate the coverage report
+    cov.report()
