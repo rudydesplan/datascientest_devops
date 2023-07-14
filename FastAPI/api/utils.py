@@ -7,5 +7,5 @@ def validate_subjects(subjects: List[str]):
             raise ValueError(f"Invalid subject: {subject}")
 
 def validate_use_case(use_case: str):
-    if use_case not in config.VALID_TEST_TYPES:
+    if use_case not in config.VALID_USE_CASES:
         raise ValueError(f"Invalid use case: {use_case}")
