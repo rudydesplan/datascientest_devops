@@ -7,6 +7,6 @@ app = FastAPI()
 app.include_router(questions_router, prefix="/questions", tags=["questions"])
 app.include_router(admin_router, prefix="/admin", tags=["admin"])
 
-@app.get("/health")
+@app.get("/health", summary="Health Check")
 async def health_check():
     return {"status": "API is healthy"}
