@@ -38,5 +38,4 @@ def create_question(question: QuestionBase, credentials: HTTPBasicCredentials = 
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error occurred while adding question")
         
-# You will also need to define the Question and QuestionBase models in the models.py file.
 # this is still a basic setup and might need further adjustments based on the actual implementation of the auth, admin, database, and questions modules and your specific requirements.
