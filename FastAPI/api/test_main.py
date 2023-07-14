@@ -13,19 +13,24 @@ def test_health_check():
 # Test for basic authentication
 
 def test_get_questions_unauthorized():
-    response = client.get("/questions?subjects=BDD&use=Test de positionnement&number=10")
+    response = client.get("/questions?subject=BDD&use=Test de positionnement&number=5")
     assert response.status_code == 401
 
 def test_get_questions_authorized():
     response = client.get(
-        "/questions?subjects=BDD&use=Test de positionnement&number=10",
-        auth=("alice", "wonderland")
+        "/questions",
+        params={
+            "subject": "Classification",
+            "use": "Test de validation",
+            "number": 5,
+        },
+        headers={"Authorization": "Basic YWxpY2U6d29uZGVybGFuZA=="}
     )
     assert response.status_code == 200
 
 def test_get_questions_wrong_credentials():
     response = client.get(
-        "/questions?subjects=BDD&use=Test de positionnement&number=10",
+        "/questions?subject=BDD&use=Test de positionnement&number=5",
         auth=("wrong_user", "wrong_password")
     )
     assert response.status_code == 401
@@ -34,9 +39,10 @@ def test_get_questions_wrong_credentials():
 
 def test_get_questions_zero():
     response = client.get(
-        "/questions?subjects=BDD&use=Test de positionnement&number=0",
+        "/questions?subject=BDD&use=Test de positionnement&number=0",
         auth=("alice", "wonderland")
     )
+    print(response.json())
     assert response.status_code == 200
     assert response.json() == []
 
@@ -44,34 +50,34 @@ def test_get_questions_zero():
 
 def test_get_questions_negative_number():
     response = client.get(
-        "/questions?subjects=BDD&use=Test de positionnement&number=-10",
+        "/questions?subject=BDD&use=Test de positionnement&number=-5",
         auth=("alice", "wonderland")
     )
     assert response.status_code == 400
 
-# Test for getting random questions with valid subjects and test type
+# Test for getting random questions with valid subject and test type
 
 def test_get_questions_valid():
     response = client.get(
-        "/questions?subjects=BDD&use=Test de positionnement&number=10",
+        "/questions?subject=BDD&use=Test de positionnement&number=5",
         auth=("alice", "wonderland")
     )
     assert response.status_code == 200
     assert isinstance(response.json(), list)
-    assert len(response.json()) == 10
+    assert len(response.json()) == 5
 
-# Test for getting random questions with invalid subjects or test type
+# Test for getting random questions with invalid subject or test type
 
-def test_get_questions_invalid_subjects():
+def test_get_questions_invalid_subject():
     response = client.get(
-        "/questions?subjects=Invalid&use=Test de positionnement&number=10",
+        "/questions?subject=Invalid&use=Test de positionnement&number=5",
         auth=("alice", "wonderland")
     )
     assert response.status_code == 400
 
 def test_get_questions_invalid_use_case():
     response = client.get(
-        "/questions?subjects=BDD&use=Invalid&number=10",
+        "/questions?subject=BDD&use=Invalid&number=5",
         auth=("alice", "wonderland")
     )
     assert response.status_code == 400
@@ -84,12 +90,13 @@ def test_create_question_unauthorized():
         json={
             "question": "Test question",
             "subject": "BDD",
-            "correct": ["A"],
+            "correct": "A",
             "use": "Test de positionnement",
-            "answerA": "Answer A",
-            "answerB": "Answer B",
-            "answerC": "Answer C",
-            "answerD": "Answer D"
+            "responseA": "Response A",
+            "responseB": "Response B",
+            "responseC": "Response C",
+            "responseD": "Response D",
+            "remark": ""
         },
         auth=("alice", "wonderland")
     )
@@ -101,12 +108,13 @@ def test_create_question_authorized():
         json={
             "question": "Test question",
             "subject": "BDD",
-            "correct": ["A"],
+            "correct": "A",
             "use": "Test de positionnement",
-            "answerA": "Answer A",
-            "answerB": "Answer B",
-            "answerC": "Answer C",
-            "answerD": "Answer D"
+            "responseA": "Response A",
+            "responseB": "Response B",
+            "responseC": "Response C",
+            "responseD": "Response D",
+            "remark": ""
         },
         auth=("admin", "4dm1N")
     )
@@ -118,12 +126,13 @@ def test_create_question_missing_parameters():
         "/admin",
         json={
             "question": "Test question",
-            "correct": ["A"],
+            "correct": "A",
             "use": "Test de positionnement",
-            "answerA": "Answer A",
-            "answerB": "Answer B",
-            "answerC": "Answer C",
-            "answerD": "Answer D"
+            "responseA": "Response A",
+            "responseB": "Response B",
+            "responseC": "Response C",
+            "responseD": "Response D",
+            "remark": ""
         },
         auth=("admin", "4dm1N")
     )
@@ -135,12 +144,13 @@ def test_create_question_empty_strings():
         json={
             "question": "",
             "subject": "",
-            "correct": [""],
+            "correct": "",
             "use": "",
-            "answerA": "",
-            "answerB": "",
-            "answerC": "",
-            "answerD": ""
+            "responseA": "",
+            "responseB": "",
+            "responseC": "",
+            "responseD": "",
+            "remark": ""
         },
         auth=("admin", "4dm1N")
     )
