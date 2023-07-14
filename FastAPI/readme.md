@@ -34,9 +34,15 @@ answerD : the answer D (if it exists)
 
 ## The API
 
-On the application or web browser, the user must be able to choose a test type (use) as well as one or more categories (subject). Moreover, the application can produce MCQs of 5, 10 or 20 questions. The API must therefore be able to return this number of questions. As the application must be able to generate many MCQs, the questions must be returned in a random order: thus, a request with the same parameters can return different questions.
+On the application or web browser, the user must be able to choose a test type (use) as well as one or more categories (subject).
 
-As users must have created an account, we need to be able to verify their credentials. For now the API uses basic authentication, based on username and password: the string containing Basic username:password will have to be passed in the Authorization header (in theory, this string should be encoded but to simplify the exercise, we can choose not to encode it)
+Moreover, the application can produce MCQs of 5, 10 or 20 questions. The API must therefore be able to return this number of questions.
+
+As the application must be able to generate many MCQs, the questions must be returned in a random order: thus, a request with the same parameters can return different questions.
+
+As users must have created an account, we need to be able to verify their credentials.
+
+For now the API uses basic authentication, based on username and password: the string containing Basic username:password will have to be passed in the Authorization header (in theory, this string should be encoded but to simplify the exercise, we can choose not to encode it)
 
 For the identifiers, we can use the following dictionary :
 
