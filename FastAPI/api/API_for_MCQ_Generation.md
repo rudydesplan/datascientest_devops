@@ -86,3 +86,21 @@ We'll specify these in a `requirements.txt` file
 `utils.py`: This module will contain utility functions that are used throughout the application. One such function could be for selecting a specified number of random questions.
 
 `requirements.txt`
+
+# Development process
+
+config.py: Set up our configuration variables first. This can include the location of your CSV file, the valid test types and categories, and the admin password.
+
+models.py: Define our Pydantic models next. These models will be used for request and response handling in your other modules.
+
+database.py: Set up the functionality for reading and writing from your CSV file. This module is the cornerstone of your data handling, and many of your other modules will rely on it.
+
+auth.py: Set up our basic authentication logic. This will be important to have in place when you start setting up endpoints in your other modules.
+
+utils.py: Write utility functions for operations like fetching random questions. Many of our endpoints may need to use these functions, so it's good to have them in place early.
+
+questions.py and admin.py: Write the logic for the question-related operations and the admin operations. These are the main features of the application and will rely on all of the previous modules we have written.
+
+main.py: Once all our other modules are in place, we can write the main.py file. This file will bring everything together and serve as the entry point for your application.
+
+requirements.txt: This can be created at any time during the project, but you should certainly have it in place before anyone else tries to run your application. It should list all of the Python libraries that your application depends on.
