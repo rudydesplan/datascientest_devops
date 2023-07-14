@@ -7,7 +7,7 @@ from auth import get_current_user
 
 router = APIRouter()
 
-@router.get("/", response_model=List[Question])
+@router.get("/", response_model=List[Question], summary="Get Random Questions")
 async def read_questions(subjects: List[str], use: str, number: int, current_user: str = Depends(get_current_user)):
     validate_subjects(subjects)
     validate_use_case(use)
