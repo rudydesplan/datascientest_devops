@@ -5,7 +5,7 @@ class Config:
     CSV_FILE_PATH = os.getenv("CSV_FILE_PATH", default="path_to_your_csv_file.csv")
     
     # Add the valid categories and test types for your application.
-    VALID_CATEGORIES: List[str] = ["BDD", "Systèmes distribués","Docker","Classification","Data Science","Machine Learning","Automation","Streaming de données"]
+    VALID_SUBJECT: List[str] = ["BDD", "Systèmes distribués","Docker","Classification","Data Science","Machine Learning","Automation","Streaming de données"]
     VALID_USE_CASES: List[str] = ["Test de positionnement","Test de validation","Total Bootcamp"]
     
     ADMIN_USERNAME = "admin"
